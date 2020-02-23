@@ -1,13 +1,10 @@
 <%-- 
-    Document   : insertproductdata
-    Created on : 18 Feb, 2020, 12:40:44 PM
+    Document   : updateproductdata
+    Created on : 19 Feb, 2020, 3:57:53 PM
     Author     : LENOVO
 --%>
-<%@page import = "java.sql.*" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-
-
+<%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,29 +22,34 @@
             }
             form input
             {
-                width: 160px;
+                width: 250px;
                 height:35px;
                 border-radius: 8px;
-            }   
-            #button:hover
+            }
+            #button
+            {
+                width: 160px;
+            }
+             #button:hover
             {
                 background-color: white;
                 text-decoration: underline;
+                
             }
             
-           
+            
         </style>
     </head>
     <body>
         <%
-            if(request.getParameter("insertdata")!= null)
+            if(request.getParameter("updatedata")!= null)
             {
         %>
         <form>
-            <input type="text" name="pname" placeholder="Enter name"><br><br>
-                <input type="number" name="price" placeholder="Enter price"><br><br>
-                <input type="text" name="desc" placeholder="Enter description"><br><br>
-                <input type="submit" name="insert" value="Insert" id="button"><br><br>
+            <input type="number" name ="id" placeholder="Enter id of product"><br><br>
+            <input type ="text" name="category" placeholder="Enter the category you want to update"><br><br>
+            <input type ="text" name="value" placeholder="Enter the new value here"><br><br>
+            <input type="submit" name="update" value="Update" id="button"><br><br>
         </form>
         <%
             }
@@ -55,24 +57,23 @@
     </body>
 </html>
 <%
-    if(request.getParameter("insert")!= null)
+     if(request.getParameter("update")!= null)
     {
-       String pname = request.getParameter("pname");
-       int price = Integer.parseInt(request.getParameter("price"));
-       String desc = request.getParameter("desc");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String category = request.getParameter("category");
+       String value = request.getParameter("value");
        try
        {
            Class.forName("com.mysql.jdbc.Driver");
            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ajt", "root", "");
            Statement stmt = con.createStatement();
-           String sql = "INSERT INTO products(name,price,description) VALUES ('"+pname+"','"+price+"','"+desc+"')";
+           String sql = "UPDATE products SET "+category+" = '"+value+"' WHERE  id = "+id+"";
            int affectedRows = stmt.executeUpdate(sql);
            response.sendRedirect("productsearch.jsp");
-           }
-       catch(Exception e)
+       }catch(Exception e)
        {
            out.println(e);
        }
-    }
+    } 
 
-%>
+    %>

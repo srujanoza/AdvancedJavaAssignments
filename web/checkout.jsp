@@ -20,6 +20,8 @@
 <%
        if(request.getParameter("remove")!=null)
        {
+           %>
+           <%
            HashMap<Integer, Integer> cartItems = (HashMap<Integer,Integer>) session.getAttribute("cart");
            Integer rid = (Integer.parseInt(request.getParameter("removeId")));
            cartItems.remove(rid);
